@@ -13,6 +13,9 @@
 
 #include <string>
 
+//
+// NOTE:
+//	This is not a functional version yet. I am working on building and will revise them soon.
 
 class jsoncpp_rpc
 {
