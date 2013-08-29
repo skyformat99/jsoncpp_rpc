@@ -12,21 +12,37 @@
 #define JSONCPPRPC_H
 
 #include <string>
+#include "json.h"
 
 //
 // NOTE:
-//	This is not a functional version yet. I am working on building and will revise them soon.
+//	This is not a complete version yet. I am working on building and will revise them soon.
 
 class jsoncpp_rpc
 {
 public:	
 	static std::string writeRequest(const std::string &method, const std::string &params, int id);
 
+	class Request
+	{
+	public:
+		Request() {}
+		Request(const std::string &method, const std::string &params, int id);
+		std::string serialize() const;
+		bool serialize(const std::string &json);
+		Json::Value params() const { return m_params; }
+		std::string method() const { return m_method; }
+
+	private:
+		std::string m_method;
+		Json::Value m_params;
+		int			m_id;
+	};
+
 	class Response
 	{
 	public:
 		Response();
-		bool set(const std::string &json);
 
 		void result(const std::string &res) { m_result = res; }
 		std::string result() const { return m_result; }
@@ -37,6 +53,7 @@ public:
 		std::string errorMessage() const { return m_errorMessage; }
 
 		std::string serialize() const;
+		bool serialize(const std::string &json);
 
 	private:
 		std::string m_result;
