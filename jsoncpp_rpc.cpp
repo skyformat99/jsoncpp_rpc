@@ -51,6 +51,8 @@ bool jsoncpp_rpc::Request::serialize(const std::string &json)
 		return false;
 
 	m_params = root["params"];
+
+	m_id = root.get("id", -1).asInt();
 	return true;
 }
 
