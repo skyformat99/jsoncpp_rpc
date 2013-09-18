@@ -12,7 +12,7 @@
 #define JSONCPPRPC_H
 
 #include <string>
-#include "json.h"
+#include <json/json.h>
 
 //
 // NOTE:
@@ -26,12 +26,13 @@ public:
 	class Request
 	{
 	public:
-		Request() {}
+		Request() : m_id(-1) {}
 		Request(const std::string &method, const std::string &params, int id);
 		std::string serialize() const;
 		bool serialize(const std::string &json);
 		Json::Value params() const { return m_params; }
 		std::string method() const { return m_method; }
+		int id() const { return m_id; }
 
 	private:
 		std::string m_method;

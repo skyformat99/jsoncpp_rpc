@@ -1,6 +1,9 @@
 #include "jsoncpp_rpc.h"
+#include <cstring>
+
 
 using namespace std;
+
 
 string jsoncpp_rpc::writeRequest(const string &method, const string &params, int id)
 {
@@ -14,7 +17,7 @@ string jsoncpp_rpc::writeRequest(const string &method, const string &params, int
 	if (id >= 0)
 	{
 		char buf[32];
-		_itoa_s(id, buf, 10);
+		sprintf(buf, "%d", id);
 		req += " , \"id\": " + string(buf);
 	}
 	req += "}";
@@ -69,17 +72,17 @@ string jsoncpp_rpc::Response::serialize() const
 	if (m_errorCode > 0)
 	{
 		char buf[32];
-		_itoa_s(m_errorCode, buf, 10);
+		sprintf(buf, "%d", m_errorCode);
 		output += ", \"error\": {\"error\": " + string(buf) + ", \"message\": \"" + m_errorMessage + "\"}, \"id\": ";
-		_itoa_s(m_id, buf, 10);
+		sprintf(buf, "%d", m_id);
 		output += m_id == NULL ? "null}" : string(buf) + "}";
 	}
 	else
 	{
 		char buf[32];
-		_itoa_s(m_errorCode, buf, 10);
+		sprintf(buf, "%d", m_errorCode);
 		output += ", \"result\": " + m_result + "\"id\": ";
-		_itoa_s(m_id, buf, 10);
+		sprintf(buf, "%d", m_id);
 		output += m_id == NULL ? "null}" : string(buf) + "}";
 	}
 
